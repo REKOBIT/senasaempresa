@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reporte - SENASA EMPRESA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #f7f8fa;
+            --card: #ffffff;
+            --border: #dce0e6;
+            --border-focus: #1a56db;
+            --text: #1f2937;
+            --text-dim: #6b7280;
+            --text-muted: #9ca3af;
+            --accent: #1a56db;
+            --accent-hover: #1648b8;
+            --accent-light: #eef2ff;
+            --accent-glow: rgba(26, 86, 219, 0.12);
+            --success: #059669;
+            --success-bg: #ecfdf5;
+            --success-border: #a7f3d0;
+            --error: #dc2626;
+            --error-bg: #fef2f2;
+            --error-border: #fecaca;
+            --radius: 8px;
+            --radius-lg: 12px;
+            --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+            --shadow-lg: 0 4px 16px rgba(0,0,0,0.08);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            padding: 40px 20px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .form-wrapper {
+            width: 100%;
+            max-width: 620px;
+        }
+
+        /* ─── Header ─── */
+        .form-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .form-header .logo-text {
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 12px;
+        }
+
+        .form-header h1 {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 6px;
+        }
+
+        .form-header p {
+            color: var(--text-dim);
+            font-size: 14px;
+        }
+
+        /* ─── Card ─── */
+        .form-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 32px;
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* ─── Sections ─── */
+        .section-title {
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--text-dim);
+            margin-top: 28px;
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .section-title:first-child { margin-top: 0; }
+        .section-title .icon { font-size: 13px; }
+
+        /* ─── Form Layout ─── */
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group.full {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            display: block;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text);
+            margin-bottom: 5px;
+        }
+
+        label .req {
+            color: var(--error);
+            font-size: 11px;
+            margin-left: 2px;
+        }
+
+        /* ─── Inputs ─── */
+        input, select, textarea {
+            width: 100%;
+            padding: 10px 14px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            transition: all 0.15s ease;
+            outline: none;
+        }
+
+        input:hover, select:hover, textarea:hover {
+            border-color: #b0b8c4;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border-color: var(--border-focus);
+            box-shadow: 0 0 0 3px var(--accent-glow);
+        }
+
+        input::placeholder, textarea::placeholder {
+            color: var(--text-muted);
+        }
+
+        select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%236b7280' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            padding-right: 36px;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 70px;
+        }
+
+        /* ─── Time ─── */
+        .time-row {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .time-row input {
+            width: 64px;
+            text-align: center;
+        }
+
+        .time-row .sep {
+            color: var(--text-dim);
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .time-row select { width: 76px; }
+
+        /* ─── File Upload ─── */
+        .file-upload {
+            position: relative;
+            border: 2px dashed var(--border);
+            border-radius: var(--radius);
+            padding: 24px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            background: var(--bg);
+        }
+
+        .file-upload:hover {
+            border-color: var(--accent);
+            background: var(--accent-light);
+        }
+
+        .file-upload input[type="file"] {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+            border: none;
+            padding: 0;
+        }
+
+        .file-upload .up-icon { font-size: 24px; margin-bottom: 6px; }
+
+        .file-upload .up-text {
+            color: var(--text-dim);
+            font-size: 13px;
+        }
+
+        .file-upload .up-text strong { color: var(--accent); }
+
+        .file-name {
+            margin-top: 6px;
+            font-size: 12px;
+            color: var(--success);
+            font-weight: 500;
+        }
+
+        /* ─── Conditional ─── */
+        .conditional {
+            display: none;
+            animation: slideIn 0.25s ease;
+        }
+
+        .conditional.active { display: block; }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ─── Submit ─── */
+        .btn-submit {
+            width: 100%;
+            padding: 13px;
+            margin-top: 8px;
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            border-radius: var(--radius);
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .btn-submit:hover {
+            background: var(--accent-hover);
+            box-shadow: 0 2px 8px rgba(26, 86, 219, 0.25);
+        }
+
+        .btn-submit:disabled {
+            background: #b0b8c4;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .btn-submit .spinner {
+            display: none;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 0.5s linear infinite;
+            margin: 0 auto;
+        }
+
+        .btn-submit.loading .btn-text { display: none; }
+        .btn-submit.loading .spinner { display: inline-block; }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* ─── Status ─── */
+        .status {
+            margin-top: 14px;
+            padding: 12px 16px;
+            border-radius: var(--radius);
+            font-size: 13px;
+            display: none;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .status.success {
+            display: flex;
+            background: var(--success-bg);
+            border: 1px solid var(--success-border);
+            color: var(--success);
+        }
+
+        .status.error {
+            display: flex;
+            background: var(--error-bg);
+            border: 1px solid var(--error-border);
+            color: var(--error);
+        }
+
+        /* ─── Responsive ─── */
+        @media (max-width: 500px) {
+            body { padding: 20px 12px; }
+            .form-card { padding: 20px; }
+            .form-row { grid-template-columns: 1fr; }
+            .form-header h1 { font-size: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="form-wrapper">
+        <div class="form-header">
+            <div class="logo-text">SENASA EMPRESA</div>
+            <h1>Reporte de incidencias</h1>
+            <p>Reporta cualquier problema con las máquinas expendedoras</p>
+        </div>
+
+        <div class="form-card">
+            <form id="reportForm">
+
+                <!-- ═══ DATOS PERSONALES ═══ -->
+                <div class="section-title">
+                    <span class="icon">👤</span> Datos personales
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Nombre y Apellido <span class="req">*</span></label>
+                        <input type="text" id="nombre" required placeholder="Tu nombre completo">
+                    </div>
+                    <div class="form-group">
+                        <label>Email <span class="req">*</span></label>
+                        <input type="email" id="email" required placeholder="tu@correo.com">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Teléfono</label>
+                        <input type="tel" id="telefono" placeholder="+52 55 1234 5678">
+                    </div>
+                    <div class="form-group">
+                        <label>Fecha <span class="req">*</span></label>
+                        <input type="date" id="fecha" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Campaña</label>
+                    <input type="text" id="campana" placeholder="Nombre de la campaña (opcional)">
+                </div>
+
+                <!-- ═══ UBICACIÓN ═══ -->
+                <div class="section-title">
+                    <span class="icon">📍</span> Ubicación
+                </div>
+
+                <div class="form-group">
+                    <label>Sede <span class="req">*</span></label>
+                    <select id="sede" required>
+                        <option value="">Seleccionar sede</option>
+                        <option value="Xola">Xola</option>
+                        <option value="Troncoso">Troncoso</option>
+                        <option value="Naucalpan">Naucalpan</option>
+                    </select>
+                </div>
+
+                <!-- CONDICIONAL: Piso Xola → si SEDE = Xola -->
+                <div class="form-group conditional" id="grp-piso">
+                    <label>Piso Xola <span class="req">*</span></label>
+                    <select id="piso_xola">
+                        <option value="">Seleccionar un piso</option>
+                        <option value="Piso 4">Piso 4</option>
+                        <option value="Piso 7">Piso 7</option>
+                    </select>
+                </div>
+
+                <!-- CONDICIONAL: Carril P.4 → si Piso = Piso 4 -->
+                <div class="form-group conditional" id="grp-p4">
+                    <label>Carril Máquina P.4 <span class="req">*</span></label>
+                    <select id="carril_p4">
+                        <option value="">Seleccione carril</option>
+                        <option>11</option><option>13</option><option>14</option><option>15</option>
+                        <option>16</option><option>17</option><option>18</option><option>19</option>
+                        <option>21</option><option>22</option><option>23</option><option>24</option>
+                        <option>25</option><option>26</option><option>27</option><option>28</option>
+                        <option>29</option><option>31</option><option>32</option><option>33</option>
+                        <option>34</option><option>35</option><option>36</option><option>37</option>
+                        <option>38</option><option>39</option><option>51</option><option>52</option>
+                        <option>53</option><option>54</option><option>55</option><option>61</option>
+                        <option>62</option><option>63</option><option>64</option><option>65</option>
+                        <option>66</option><option>67</option><option>68</option><option>76</option>
+                        <option>77</option><option>78</option><option>79</option>
+                    </select>
+                </div>
+
+                <!-- CONDICIONAL: Carril P.7 → si Piso = Piso 7 -->
+                <div class="form-group conditional" id="grp-p7">
+                    <label>Carril Máquina P.7 <span class="req">*</span></label>
+                    <select id="carril_p7">
+                        <option value="">Seleccione carril</option>
+                        <option>11</option><option>13</option><option>15</option>
+                        <option>21</option><option>22</option><option>23</option>
+                        <option>24</option><option>25</option><option>30</option>
+                        <option>31</option><option>32</option><option>33</option>
+                        <option>34</option><option>35</option>
+                    </select>
+                </div>
+
+                <!-- CONDICIONAL: Carril P.3 → si SEDE = Troncoso -->
+                <div class="form-group conditional" id="grp-p3">
+                    <label>Carril Máquina P.3 <span class="req">*</span></label>
+                    <select id="carril_p3">
+                        <option value="">Seleccione carril</option>
+                        <option>11</option><option>13</option><option>15</option>
+                        <option>21</option><option>22</option><option>23</option>
+                        <option>24</option><option>25</option><option>30</option>
+                        <option>31</option><option>32</option><option>33</option>
+                        <option>34</option><option>35</option><option>40</option>
+                        <option>41</option><option>42</option><option>43</option>
+                        <option>44</option><option>45</option><option>51</option>
+                        <option>52</option><option>53</option><option>54</option>
+                        <option>55</option><option>60</option><option>61</option>
+                        <option>62</option><option>63</option><option>64</option>
+                        <option>65</option>
+                    </select>
+                </div>
+
+                <!-- CONDICIONAL: Carril Naucalpan → si SEDE = Naucalpan -->
+                <div class="form-group conditional" id="grp-nauc">
+                    <label>Carril Máquina Naucalpan <span class="req">*</span></label>
+                    <select id="carril_naucalpan">
+                        <option value="">Seleccione carril</option>
+                        <option>11</option><option>13</option><option>15</option>
+                        <option>21</option><option>22</option><option>23</option>
+                        <option>24</option><option>25</option><option>30</option>
+                        <option>31</option><option>32</option><option>33</option>
+                        <option>34</option><option>35</option>
+                    </select>
+                </div>
+
+                <!-- ═══ DETALLE ═══ -->
+                <div class="section-title">
+                    <span class="icon">🔧</span> Detalle del reporte
+                </div>
+
+                <div class="form-group">
+                    <label>Hora de lo ocurrido</label>
+                    <div class="time-row">
+                        <input type="number" id="hora_h" min="1" max="12" placeholder="HH">
+                        <span class="sep">:</span>
+                        <input type="number" id="hora_m" min="0" max="59" placeholder="MM">
+                        <select id="hora_ap">
+                            <option value="AM">AM</option>
+                            <option value="PM">PM</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Descripción</label>
+                    <select id="descripcion">
+                        <option value="">Indique qué pasó con su producto</option>
+                        <option value="La máquina se quedo con el producto">La máquina se quedó con el producto</option>
+                        <option value="La máquina no me dio cambio">La máquina no me dio cambio</option>
+                        <option value="La máquina me dio el producto pero se quedo con el cambio">La máquina me dio el producto pero se quedó con el cambio</option>
+                        <option value="La máquina se quedo con el producto y el cambio">La máquina se quedó con el producto y el cambio</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Producto</label>
+                    <select id="producto">
+                        <option value="">Seleccione producto</option>
+                        <option>Papas Barcel</option><option>Sniker</option><option>Pelonetes</option>
+                        <option>M&M</option><option>Principe</option><option>Chicles</option>
+                        <option>Kinder Delice</option><option>Palomitas</option><option>Barritas Fresa</option>
+                        <option>Barritas Stila</option><option>Polvorones</option><option>Canelitas</option>
+                        <option>Carlos V</option><option>Gomitas</option><option>Chokis</option>
+                        <option>Cocas</option><option>Jugo</option><option>Aguas</option>
+                        <option>Leches Ades</option><option>Peñafieles</option><option>Pepsi</option>
+                        <option>Papas Chiquitas</option><option>Semillas Surtidas</option><option>Bubulubus</option>
+                        <option>Cacahuates Japoneses</option><option>Klenex</option><option>Pepto</option>
+                        <option>Alcalzelser</option><option>Kranky</option><option>Maruchan</option>
+                        <option>Bolitas Fresa</option><option>Gomitas Especiales</option><option>Tarugos</option>
+                        <option>Toallitas</option><option>Cigarros</option><option>Café</option>
+                        <option>Skuincles</option><option>Té Verde</option>
+                    </select>
+                </div>
+
+                <!-- ═══ FOTOS ═══ -->
+                <div class="section-title">
+                    <span class="icon">📷</span> Evidencia
+                </div>
+
+                <div class="form-group">
+                    <label>Fotos de lo sucedido</label>
+                    <div class="file-upload">
+                        <div class="up-icon">📁</div>
+                        <div class="up-text">
+                            <strong>Haz clic aquí</strong> o arrastra una imagen<br>
+                            JPG, PNG o PDF · Máx 100MB
+                        </div>
+                        <input type="file" id="fotos" accept=".jpg,.jpeg,.png,.pdf">
+                        <div class="file-name" id="fileName"></div>
+                    </div>
+                </div>
+
+                <!-- ═══ ENVIAR ═══ -->
+                <button type="submit" class="btn-submit" id="btnSubmit">
+                    <span class="btn-text">Enviar reporte</span>
+                    <div class="spinner"></div>
+                </button>
+
+                <div class="status" id="status"></div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // ⚠️ CAMBIA ESTA URL por la de tu servidor Python / Coolify
+        const API_URL = '/webhook';
+
+        // ════════════════════════════════════════
+        // LÓGICA CONDICIONAL (idéntica a Gravity Forms)
+        // ════════════════════════════════════════
+
+        const sede = document.getElementById('sede');
+        const pisoXola = document.getElementById('piso_xola');
+
+        const grpPiso = document.getElementById('grp-piso');
+        const grpP3 = document.getElementById('grp-p3');
+        const grpP4 = document.getElementById('grp-p4');
+        const grpP7 = document.getElementById('grp-p7');
+        const grpNauc = document.getElementById('grp-nauc');
+
+        function hideAll() {
+            [grpPiso, grpP3, grpP4, grpP7, grpNauc].forEach(el => el.classList.remove('active'));
+            pisoXola.value = '';
+            document.getElementById('carril_p3').value = '';
+            document.getElementById('carril_p4').value = '';
+            document.getElementById('carril_p7').value = '';
+            document.getElementById('carril_naucalpan').value = '';
+        }
+
+        function hideCarriles() {
+            grpP4.classList.remove('active');
+            grpP7.classList.remove('active');
+            document.getElementById('carril_p4').value = '';
+            document.getElementById('carril_p7').value = '';
+        }
+
+        // Cambio de SEDE
+        sede.addEventListener('change', function () {
+            hideAll();
+            if (this.value === 'Xola') grpPiso.classList.add('active');
+            else if (this.value === 'Troncoso') grpP3.classList.add('active');
+            else if (this.value === 'Naucalpan') grpNauc.classList.add('active');
+        });
+
+        // Cambio de Piso
+        pisoXola.addEventListener('change', function () {
+            hideCarriles();
+            if (this.value === 'Piso 4') grpP4.classList.add('active');
+            else if (this.value === 'Piso 7') grpP7.classList.add('active');
+        });
+
+        // File upload
+        document.getElementById('fotos').addEventListener('change', function () {
+            document.getElementById('fileName').textContent = this.files[0] ? '✓ ' + this.files[0].name : '';
+        });
+
+        // ════════════════════════════════════════
+        // ENVIAR
+        // ════════════════════════════════════════
+
+        document.getElementById('reportForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const btn = document.getElementById('btnSubmit');
+            const status = document.getElementById('status');
+
+            btn.classList.add('loading');
+            btn.disabled = true;
+            status.className = 'status';
+
+            const horaH = document.getElementById('hora_h').value;
+            const horaM = document.getElementById('hora_m').value;
+            const horaAP = document.getElementById('hora_ap').value;
+
+            const sedeVal = sede.value;
+            const pisoVal = pisoXola.value;
+
+            // Envía con los mismos IDs de Gravity Forms
+            const payload = {
+                "input_1": document.getElementById('nombre').value,
+                "input_3": document.getElementById('email').value,
+                "input_4": document.getElementById('telefono').value,
+                "input_5": document.getElementById('fecha').value,
+                "input_6": document.getElementById('campana').value,
+                "input_7": sedeVal,
+                "input_18": sedeVal === 'Xola' ? pisoVal : '',
+                "input_14.1": horaH,
+                "input_14.2": horaM || '00',
+                "input_14.3": horaAP,
+                "input_19": document.getElementById('descripcion').value,
+                "input_10": document.getElementById('producto').value,
+                "input_13": sedeVal === 'Troncoso' ? document.getElementById('carril_p3').value : '',
+                "input_12": (sedeVal === 'Xola' && pisoVal === 'Piso 4') ? document.getElementById('carril_p4').value : '',
+                "input_11": (sedeVal === 'Xola' && pisoVal === 'Piso 7') ? document.getElementById('carril_p7').value : '',
+                "input_20": sedeVal === 'Naucalpan' ? document.getElementById('carril_naucalpan').value : '',
+            };
+
+            try {
+                const res = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload),
+                });
+                const result = await res.json();
+
+                if (res.ok) {
+                    status.className = 'status success';
+                    status.innerHTML = '✅ ¡Gracias! Tu reporte fue registrado correctamente.';
+                    e.target.reset();
+                    hideAll();
+                    document.getElementById('fileName').textContent = '';
+                } else {
+                    throw new Error(result.detail || 'Error del servidor');
+                }
+            } catch (err) {
+                status.className = 'status error';
+                status.innerHTML = '❌ Error: ' + err.message;
+            } finally {
+                btn.classList.remove('loading');
+                btn.disabled = false;
+            }
+        });
+
+        // Fecha de hoy por defecto
+        document.getElementById('fecha').valueAsDate = new Date();
+    </script>
+</body>
+</html>

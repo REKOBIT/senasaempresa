@@ -1,0 +1,16 @@
+# Credenciales y secretos — NUNCA subir a GitHub
+.env
+credentials.json
+
+# Python
+venv/
+__pycache__/
+*.pyc
+*.pyo
+.Python
+
+# Archivos temporales
+files/
+files.zip
+Nueva carpeta/
+*.zip
