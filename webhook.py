@@ -301,7 +301,7 @@ def root():
 
 @app.get("/formulario")
 def formulario():
-    return FileResponse("formulario.html")
+    return FileResponse("formulario.html", media_type="text/html")
 
 
 @app.post("/webhook")
