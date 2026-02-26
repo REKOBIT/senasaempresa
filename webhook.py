@@ -310,12 +310,13 @@ def formulario():
 
 
 @app.post("/upload")
-async def upload_file(file: UploadFile = File(...)):
+async def upload_file(request: Request, file: UploadFile = File(...)):
     filename = f"{datetime.now().strftime('%Y%m%d%H%M%S')}_{file.filename}"
     filepath = os.path.join("uploads", filename)
     with open(filepath, "wb") as f:
         f.write(await file.read())
-    return {"url": f"/uploads/{filename}"}
+    base_url = str(request.base_url).rstrip("/")
+    return {"url": f"{base_url}/uploads/{filename}"}
 
 
 @app.post("/webhook")
