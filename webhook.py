@@ -315,7 +315,7 @@ async def upload_file(request: Request, file: UploadFile = File(...)):
     filepath = os.path.join("uploads", filename)
     with open(filepath, "wb") as f:
         f.write(await file.read())
-    base_url = str(request.base_url).rstrip("/")
+    base_url = settings.BASE_URL.rstrip("/") if settings.BASE_URL else str(request.base_url).rstrip("/")
     return {"url": f"{base_url}/uploads/{filename}"}
 
 

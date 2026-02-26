@@ -19,6 +19,9 @@ class Settings(BaseSettings):
     EMAIL_FROM: str = ""
     EMAIL_NOTIFY_TO: str = ""
 
+    # ─── URL base pública (para links de imágenes en email y Sheet) ───
+    BASE_URL: str = ""
+
     # ─── CORS ───
     ALLOWED_ORIGINS: List[str] = ["*"]
 
