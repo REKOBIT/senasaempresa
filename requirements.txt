@@ -5,3 +5,4 @@ pydantic-settings>=2.5.0
 gspread>=6.1.2
 google-auth>=2.34.0
 python-dotenv>=1.0.1
+python-multipart>=0.0.9
