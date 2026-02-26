@@ -610,6 +610,17 @@
             const sedeVal = sede.value;
             const pisoVal = pisoXola.value;
 
+            // Subir imagen primero si existe
+            let fotoUrl = '';
+            const fotoFile = document.getElementById('fotos').files[0];
+            if (fotoFile) {
+                const formData = new FormData();
+                formData.append('file', fotoFile);
+                const uploadRes = await fetch('/upload', { method: 'POST', body: formData });
+                const uploadData = await uploadRes.json();
+                fotoUrl = uploadData.url || '';
+            }
+
             // Envía con los mismos IDs de Gravity Forms
             const payload = {
                 "input_1": document.getElementById('nombre').value,
@@ -628,6 +639,7 @@
                 "input_12": (sedeVal === 'Xola' && pisoVal === 'Piso 4') ? document.getElementById('carril_p4').value : '',
                 "input_11": (sedeVal === 'Xola' && pisoVal === 'Piso 7') ? document.getElementById('carril_p7').value : '',
                 "input_20": sedeVal === 'Naucalpan' ? document.getElementById('carril_naucalpan').value : '',
+                "input_16": fotoUrl,
             };
 
             try {

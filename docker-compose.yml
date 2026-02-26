@@ -9,4 +9,8 @@ services:
       - .env
     volumes:
       - ./credentials.json:/app/credentials.json:ro
+      - uploads_data:/app/uploads
     restart: unless-stopped
+
+volumes:
+  uploads_data:

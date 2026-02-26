@@ -26,9 +26,10 @@ Logica condicional:
   SEDE = Naucalpan -> Carril Maquina Naucalpan
 """
 
-from fastapi import FastAPI, Request, HTTPException
+from fastapi import FastAPI, Request, HTTPException, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, FileResponse
+from fastapi.staticfiles import StaticFiles
 from datetime import datetime
 import gspread
 from google.oauth2.service_account import Credentials
@@ -38,11 +39,15 @@ from email.mime.multipart import MIMEMultipart
 from config import settings
 import json
 import logging
+import os
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("webhook")
 
 app = FastAPI(title="Webhook SENASA EMPRESA", version="3.0")
+
+os.makedirs("uploads", exist_ok=True)
+app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")
 
 app.add_middleware(
     CORSMiddleware,
@@ -302,6 +307,15 @@ def root():
 @app.get("/formulario")
 def formulario():
     return FileResponse("formulario.html", media_type="text/html")
+
+
+@app.post("/upload")
+async def upload_file(file: UploadFile = File(...)):
+    filename = f"{datetime.now().strftime('%Y%m%d%H%M%S')}_{file.filename}"
+    filepath = os.path.join("uploads", filename)
+    with open(filepath, "wb") as f:
+        f.write(await file.read())
+    return {"url": f"/uploads/{filename}"}
 
 
 @app.post("/webhook")
