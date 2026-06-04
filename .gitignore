@@ -14,3 +14,6 @@ files/
 files.zip
 Nueva carpeta/
 *.zip
+
+# Uploads del servidor (imágenes subidas por usuarios)
+uploads/

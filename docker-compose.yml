@@ -7,10 +7,18 @@ services:
       - "8028:8000"
     env_file:
       - .env
+    environment:
+      - BASE_URL=${BASE_URL:-}
     volumes:
       - ./credentials.json:/app/credentials.json:ro
       - uploads_data:/app/uploads
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
 
 volumes:
   uploads_data:
