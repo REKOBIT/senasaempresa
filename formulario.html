@@ -668,8 +668,12 @@
             }
         });
 
-        // Fecha de hoy por defecto
-        document.getElementById('fecha').valueAsDate = new Date();
+        // Fecha de hoy — solo permite seleccionar el día actual
+        const fechaInput = document.getElementById('fecha');
+        const hoy = new Date().toISOString().split('T')[0];
+        fechaInput.value = hoy;
+        fechaInput.min = hoy;
+        fechaInput.max = hoy;
     </script>
 </body>
 </html>
